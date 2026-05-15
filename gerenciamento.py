@@ -4,7 +4,6 @@ import os
 def pausar_e_limpar():
     """Pausa o sistema até o usuário apertar ENTER e depois limpa o terminal."""
     input("\n[ Pressione ENTER para continuar... ]")
-    # Limpa a tela (funciona no Windows e no Mac/Linux)
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def validar_cpf(cpf):
