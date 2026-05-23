@@ -5,6 +5,8 @@ import candidatos # Importa o seu novo ficheiro de candidatos
 import votacao
 import auditoria
 from gerenciamento import pausar_e_limpar # Importado para não repetir código
+import resultados
+
 
 # Conecta no banco de dados usando o módulo banco.py
 conexao = bancodedados.conectar()
@@ -41,10 +43,10 @@ while menup != 3:
                     case 1:
                         gerenciamento.cadastrar_eleitor(cursor, conexao)
                     case 2:
-                        print("Função em desenvolvimento.")
+                        gerenciamento.editar_eleitor(cursor, conexao)
                         pausar_e_limpar()
                     case 3:
-                        print("Função em desenvolvimento.")
+                        gerenciamento.remover_eleitor(cursor, conexao)
                         pausar_e_limpar()
                     case 4:
                         gerenciamento.buscar_eleitor(cursor)
@@ -88,8 +90,11 @@ while menup != 3:
                                     case 1:
                                         votacao.realizar_voto(conexao, cursor)
                                     case 2:
-                                        if votacao.encerrar_votacao(cursor):
-                                            menu_urna = 2 # Força a saída do laço da urna
+                                        # Verifica se a urna foi realmente encerrada
+                                        if votacao.encerrar_votacao(conexao, cursor):
+                                            menu_urna = 2 # Se encerrou de verdade, mantém 2 e sai do laço da urna
+                                        else:
+                                            menu_urna = 0 # SE O MESÁRIO CANCELOU, reseta para 0 e a urna continua aberta!
                                     case _:
                                         print("Opção inválida")
                                         pausar_e_limpar()
@@ -111,6 +116,7 @@ while menup != 3:
                                     print("Opção inválida")
                                     pausar_e_limpar()
                                     
+
                     case 3:
                         menu_resultados = 0
                         while menu_resultados != 5:
@@ -119,17 +125,13 @@ while menup != 3:
                             os.system('cls' if os.name == 'nt' else 'clear')
                             match menu_resultados:
                                 case 1: 
-                                    print("Função em desenvolvimento.")
-                                    pausar_e_limpar()
+                                    resultados.boletim_urna(cursor)
                                 case 2: 
-                                    print("Função em desenvolvimento.")
-                                    pausar_e_limpar()
+                                    resultados.estatistica_comparecimento(cursor)
                                 case 3: 
-                                    print("Função em desenvolvimento.")
-                                    pausar_e_limpar()
+                                    resultados.votos_por_partido(cursor)
                                 case 4: 
-                                    print("Função em desenvolvimento.")
-                                    pausar_e_limpar()
+                                    resultados.validacao_integridade(cursor)
                                 case 5: 
                                     print("Voltando...")
                                 case _: 

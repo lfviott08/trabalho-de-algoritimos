@@ -1,27 +1,24 @@
-import os
-# Importa a função de limpar
-from gerenciamento import pausar_e_limpar
+
+from gerenciamento import pausar_para_leitura
 
 def exibir_logs():
 
-    #Lê e exibe o ficheiro de texto contendo os logs de ocorrência da urna.
-
     print("\n--- EXIBIÇÃO DE LOGS DE OCORRÊNCIAS ---")
     
-    # Verifica se o ficheiro já foi criado
-    if os.path.exists("logs_urna.txt"):
-        arquivo = open("logs_urna.txt", "r", encoding="utf-8")
-        conteudo = arquivo.read()
-        print(conteudo)
-        arquivo.close()
-    else:
+    try:
+        # O 'with' garante que o arquivo seja fechado automaticamente após a leitura
+        with open("logs_urna.txt", "r", encoding="utf-8") as arquivo:
+            conteudo = arquivo.read()
+            print(conteudo)
+    except FileNotFoundError:
+        # Tratamento de erro exato como ensinado nos slides do professor
         print("\n[Aviso] Nenhum log encontrado. A urna ainda não registou eventos.")
         
-    pausar_e_limpar()
+    # Usa a pausa de leitura para a tela não sumir
+    pausar_para_leitura()
+
 
 def exibir_protocolos(cursor):
-
-   # Busca e exibe todos os protocolos de votação gerados no sistema em ordem alfabética.
 
     print("\n--- EXIBIÇÃO DOS PROTOCOLOS DE VOTAÇÃO ---")
     
@@ -35,4 +32,5 @@ def exibir_protocolos(cursor):
         for p in protocolos:
             print(f"Protocolo Validado: {p[0]}")
             
-    pausar_e_limpar()
+    # Usa a pausa de leitura para a tela não sumir
+    pausar_para_leitura()

@@ -2,14 +2,11 @@ from gerenciamento import pausar_e_limpar
 
 def cadastrar_candidato(cursor, conexao):
 
-    #Cadastra um novo candidato na base de dados.
-
     print("\n--- CADASTRO DE NOVO CANDIDATO ---")
     nome = input("Nome do candidato: ")
     digito = input("Número de votação (dígito numérico): ")
     partido = input("Partido: ")
 
-    # Verifica se o número já existe (RF001.10)
     cursor.execute(f"SELECT * FROM Candidatos WHERE digito_candidatos = '{digito}'")
     if len(cursor.fetchall()) > 0:
         print("\n[Erro] Já existe um candidato registado com este número.")
@@ -20,10 +17,9 @@ def cadastrar_candidato(cursor, conexao):
 
     pausar_e_limpar()
 
+
 def editar_candidato(cursor, conexao):
- 
-    #Edita o nome e partido de um candidato existente.
-    
+     
     print("\n--- EDITAR DADOS DO CANDIDATO ---")
     digito = input("Digite o número do candidato que deseja editar: ")
 
@@ -49,9 +45,8 @@ def editar_candidato(cursor, conexao):
 
     pausar_e_limpar()
 
+
 def remover_candidato(cursor, conexao):
- 
-    #Remove um candidato da base de dados pelo seu número.
 
     print("\n--- REMOVER CANDIDATO ---")
     digito = input("Digite o número do candidato que deseja remover: ")

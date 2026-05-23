@@ -12,7 +12,7 @@ CREATE TABLE Eleitores(
     id_eleitor INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     titulo_eleitoral VARCHAR(12) NOT NULL UNIQUE, 
     nome_eleitor VARCHAR(100) NOT NULL,
-    CPF_Eleitor VARCHAR(11) NOT NULL UNIQUE,      
+    CPF_Eleitor VARCHAR(50) NOT NULL UNIQUE,      
     mesario BOOLEAN NOT NULL DEFAULT FALSE,       
     chave_acesso VARCHAR(50) NOT NULL,            
     ja_votou BOOLEAN NOT NULL DEFAULT FALSE       
@@ -29,15 +29,14 @@ CREATE TABLE Candidatos(
 );
 
 -- Criação da Tabela de Votos 
+-- Criação da Tabela de Votos 
 CREATE TABLE Votos(
     id_voto INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     digito_candidato INT NOT NULL,
     data_hora DATETIME NOT NULL,                  
-    protocolo VARCHAR(50) NOT NULL UNIQUE,        -- CORREÇÃO: Vírgula adicionada
-    id_eleitor INT,                               -- CORREÇÃO: Trocado ; por ,
-    id_candidatos INT,                            -- CORREÇÃO: Trocado ; por ,
-    FOREIGN KEY (id_eleitor) REFERENCES Eleitores(id_eleitor),    -- CORREÇÃO: Parênteses e vírgula
-    FOREIGN KEY (id_candidatos) REFERENCES Candidatos(id_candidatos) -- CORREÇÃO: Parênteses
+    protocolo VARCHAR(50) NOT NULL UNIQUE,        
+    id_candidatos INT,                            
+    FOREIGN KEY (id_candidatos) REFERENCES Candidatos(id_candidatos) 
 );
 
 -- Inserindo Candidatos Fictícios
