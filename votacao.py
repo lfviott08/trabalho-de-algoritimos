@@ -27,13 +27,13 @@ def validar_credenciais(cursor, titulo, cpf_4, chave, perfil):
 
 def abrir_votacao(conexao, cursor):
     """Autentica o mesário, executa a Zerézima e abre a urna."""
-    print("\n--- ABERTURA DO SISTEMA ---")
-    titulo = input("Título do mesário: ")
-    cpf_4 = input("4 primeiros dígitos do CPF: ")
-    chave = input("Chave de acesso: ")
+    print("\n--- ABERTURA DO SISTEMA DE VOTAÇÃO ---")
+    titulo = input("Digite o título de eleitor do mesário: ")
+    cpf_4 = input("Digite os 4 primeiros dígitos do CPF: ")
+    chave = input("Digite a chave de acesso: ")
 
     if validar_credenciais(cursor, titulo, cpf_4, chave, "mesario") == False:
-        print("\n[Erro] Acesso negado.")
+        print("\n[Erro] Falha na validação do mesário. Acesso negado.")
         registrar_log("ALERTA: Tentativa de acesso negado")
         pausar_e_limpar()
         return False
@@ -51,19 +51,19 @@ def abrir_votacao(conexao, cursor):
         for cand in candidatos:
             print(f"Candidato: {cand[1]} | Número: {cand[0]} | Votos: 0")
     else:
-        print("Nenhum candidato registrado.")
+        print("Nenhum candidato registado na base de dados.")
 
     registrar_log("ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
-    print("\n[Sistema] Votação aberta!")
+    print("\n[Sistema] Votação aberta com sucesso!")
     pausar_e_limpar()
     return True
 
 def realizar_voto(conexao, cursor):
     """Identifica o eleitor e registra o voto com protocolo criptografado."""
     print("\n--- IDENTIFICAÇÃO DO ELEITOR ---")
-    titulo = input("Título de eleitor: ")
-    cpf_4 = input("4 primeiros dígitos do CPF: ")
-    chave = input("Chave de acesso: ")
+    titulo = input("Digite seu título de eleitor: ")
+    cpf_4 = input("Digite os 4 primeiros dígitos do seu CPF: ")
+    chave = input("Digite sua chave de acesso: ")
 
     if validar_credenciais(cursor, titulo, cpf_4, chave, "eleitor") == False:
         print("\n[Erro] Dados inválidos ou incorretos.")
